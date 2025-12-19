@@ -3,106 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tàng Kinh Các - Tra Cứu Huyền Huyễn</title>
+    <title>Tàng Kinh Các - Tra Cứu Bảo Điển</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-gold: #d4af37;
+            --secondary-gold: #f3e5ab;
+            --bg-dark: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --glow: 0 0 10px rgba(212, 175, 55, 0.5);
+            --red-accent: #8a1c1c;
+        }
+
         body {
-            background-color: #1a1a1a; /* Màu nền tối */
-            color: #e0e0e0; /* Màu chữ sáng */
-            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 50%, #1f1f2e 0%, #000000 100%);
+            color: #e0e0e0;
+            font-family: 'Playfair Display', serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 50px;
-            margin: 0;
             min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
+
+        /* Tiêu đề rồng bay phượng múa */
         h1 {
-            color: #d4af37; /* Màu vàng kim */
+            color: var(--primary-gold);
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #000, 0 0 20px var(--primary-gold);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px #000;
+            letter-spacing: 3px;
+            text-align: center;
+            border-bottom: 2px solid var(--red-accent);
+            padding-bottom: 10px;
         }
-        .container {
-            width: 90%;
-            max-width: 600px;
+
+        .subtitle {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Ô tìm kiếm thần thánh */
+        .search-container {
+            width: 100%;
+            max-width: 800px;
             position: relative;
+            margin-bottom: 40px;
         }
+
         input {
             width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border-radius: 25px;
-            border: 2px solid #555;
-            background-color: #333;
-            color: white;
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: 2px solid var(--primary-gold);
+            background-color: rgba(20, 20, 20, 0.9);
+            color: var(--secondary-gold);
             outline: none;
-            box-sizing: border-box; /* Đảm bảo padding không làm vỡ khung */
+            box-shadow: var(--glow);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
         }
+
         input:focus {
-            border-color: #d4af37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+            transform: scale(1.02);
         }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 5px;
-            background: #2a2a2a;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            display: none; /* Mặc định ẩn */
-            position: absolute;
+
+        input::placeholder {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Khu vực hiển thị kết quả */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
             width: 100%;
-            z-index: 100;
+            max-width: 800px;
         }
-        li {
-            padding: 12px;
-            cursor: pointer;
-            border-bottom: 1px solid #333;
-        }
-        li:hover {
-            background-color: #444;
-            color: #d4af37;
-        }
-        .result-box {
-            margin-top: 30px;
+
+        /* Thẻ kết quả (Bí kíp) */
+        .card {
+            background: linear-gradient(145deg, #1e1e1e, #252525);
+            border: 1px solid #444;
+            border-left: 5px solid var(--primary-gold);
+            border-radius: 8px;
             padding: 20px;
-            border: 1px dashed #d4af37;
-            border-radius: 10px;
-            text-align: center;
-            background-color: #222;
-            display: none; /* Mặc định ẩn */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
         }
-        .result-title {
-            font-size: 12px;
-            color: #888;
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.7), 0 0 15px rgba(212, 175, 55, 0.2);
+            border-color: var(--secondary-gold);
+        }
+
+        /* Trang trí hoa văn mờ */
+        .card::after {
+            content: '✦';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 40px;
+            color: rgba(212, 175, 55, 0.05);
+            pointer-events: none;
+        }
+
+        .question-box {
+            margin-bottom: 15px;
+        }
+
+        .label {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            display: block;
         }
-        .result-content {
-            font-size: 24px;
-            font-weight: bold;
+
+        .label-q { color: var(--red-accent); font-weight: bold; }
+        .label-a { color: var(--primary-gold); font-weight: bold; }
+
+        .content-q {
+            font-size: 1.1rem;
             color: #fff;
+            line-height: 1.5;
+        }
+
+        .content-a {
+            font-size: 1.3rem;
+            color: var(--primary-gold);
+            font-weight: bold;
+            text-shadow: 0 0 1px rgba(0,0,0,0.5);
+        }
+
+        .no-result {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #555;
+            border-top: 1px solid #333;
+            padding-top: 20px;
         }
     </style>
 </head>
 <body>
 
     <h1>Tàng Kinh Các</h1>
-    <p style="font-style: italic; color: #888;">Nhập câu hỏi để tìm kiếm...</p>
+    <div class="subtitle">"Thiên địa bất nhân - Dĩ vạn vật vi sô cẩu"</div>
 
-    <div class="container">
-        <input type="text" id="searchInput" placeholder="Ví dụ: Ai là mẹ của Đường Tam..." onkeyup="searchData()">
-        <ul id="suggestionList"></ul>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Nhập tên nhân vật, tông môn, bí pháp..." onkeyup="searchData()">
+    </div>
 
-        <div id="resultBox" class="result-box">
-            <div class="result-title">Kết quả tìm thấy</div>
-            <div id="resultContent" class="result-content"></div>
+    <div id="resultsGrid" class="results-grid">
         </div>
+    
+    <div id="noResult" class="no-result">
+        Không tìm thấy bí kíp phù hợp trong Tàng Kinh Các...
+    </div>
+
+    <div class="footer">
+        Thiết kế bởi Bốn Lù
     </div>
 
     <script>
-        // DỮ LIỆU CỦA BẠN Ở ĐÂY
-        const data = [
+        // --- KHU VỰC DỮ LIỆU (Đạo hữu thêm câu hỏi vào đây) ---
+        const database = [
             { q: "Ai là huynh đệ và cũng là người thầy mà Vương Lâm trong Tiên Nghịch kính trọng nhất ?", a: "Tư Đồ Nam" },
             { q: "Ai là mẹ của Đường Tam?", a: "A Ngân" },
             { q: "Ai là người đứng đầu Vũ Hồn Điện?", a: "Bỉ Bỉ Đông" },
@@ -358,40 +449,55 @@
         ];
 
         const input = document.getElementById("searchInput");
-        const list = document.getElementById("suggestionList");
-        const resultBox = document.getElementById("resultBox");
-        const resultContent = document.getElementById("resultContent");
+        const grid = document.getElementById("resultsGrid");
+        const noResult = document.getElementById("noResult");
+
+        // Hàm khởi chạy ban đầu (Load toàn bộ dữ liệu ra trước)
+        window.onload = function() {
+            renderList(database);
+        };
 
         function searchData() {
-            const query = input.value.toLowerCase();
-            list.innerHTML = "";
-            resultBox.style.display = "none";
-
-            if (query.length === 0) {
-                list.style.display = "none";
+            const query = input.value.toLowerCase().trim();
+            
+            if (query === "") {
+                renderList(database); // Nếu xóa trắng ô tìm kiếm thì hiện lại tất cả
                 return;
             }
 
-            const matches = data.filter(item => item.q.toLowerCase().includes(query));
+            // Lọc dữ liệu
+            const matches = database.filter(item => 
+                item.q.toLowerCase().includes(query) || 
+                item.a.toLowerCase().includes(query)
+            );
 
-            if (matches.length > 0) {
-                list.style.display = "block";
-                matches.forEach(item => {
-                    const li = document.createElement("li");
-                    li.textContent = item.q;
-                    li.onclick = () => showResult(item);
-                    list.appendChild(li);
-                });
-            } else {
-                list.style.display = "none";
-            }
+            renderList(matches);
         }
 
-        function showResult(item) {
-            input.value = item.q;
-            list.style.display = "none";
-            resultBox.style.display = "block";
-            resultContent.textContent = item.a;
+        function renderList(data) {
+            grid.innerHTML = ""; // Xóa kết quả cũ
+            
+            if (data.length === 0) {
+                noResult.style.display = "block";
+            } else {
+                noResult.style.display = "none";
+                data.forEach(item => {
+                    // Tạo thẻ HTML cho từng kết quả
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <div class="question-box">
+                            <span class="label label-q">Vấn (Hỏi)</span>
+                            <div class="content-q">${item.q}</div>
+                        </div>
+                        <div class="answer-box">
+                            <span class="label label-a">Đáp (Trả lời)</span>
+                            <div class="content-a">${item.a}</div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
         }
     </script>
 
