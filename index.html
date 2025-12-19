@@ -3,193 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tàng Kinh Các - Tra Cứu Bảo Điển</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Tàng Kinh Các - Modern Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-gold: #d4af37;
-            --secondary-gold: #f3e5ab;
-            --bg-dark: #0a0a0a;
-            --card-bg: #1a1a1a;
-            --glow: 0 0 10px rgba(212, 175, 55, 0.5);
-            --red-accent: #8a1c1c;
+            --primary: #00f2ff; /* Xanh Neon */
+            --gold: #ffd700;   /* Vàng kim */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sub: #a0a0a0;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 50%, #1f1f2e 0%, #000000 100%);
-            color: #e0e0e0;
-            font-family: 'Playfair Display', serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a0b2e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
         }
 
-        /* Tiêu đề rồng bay phượng múa */
-        h1 {
-            color: var(--primary-gold);
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 0 #000, 0 0 20px var(--primary-gold);
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
             text-align: center;
-            border-bottom: 2px solid var(--red-accent);
-            padding-bottom: 10px;
+            padding: 60px 20px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--gold), #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            letter-spacing: 4px;
         }
 
         .subtitle {
-            color: #888;
-            font-style: italic;
-            margin-bottom: 40px;
-            font-size: 1.1rem;
+            color: var(--primary);
+            font-size: 1rem;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
         }
 
-        /* Ô tìm kiếm thần thánh */
-        .search-container {
-            width: 100%;
-            max-width: 800px;
+        /* Search Box */
+        .search-wrapper {
+            width: 90%;
+            max-width: 700px;
             position: relative;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            z-index: 10;
         }
 
-        input {
+        .search-input {
             width: 100%;
-            padding: 20px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            border: 2px solid var(--primary-gold);
-            background-color: rgba(20, 20, 20, 0.9);
-            color: var(--secondary-gold);
+            padding: 20px 60px 20px 30px;
+            font-size: 1.1rem;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-input:focus {
             outline: none;
-            box-shadow: var(--glow);
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-            font-family: 'Playfair Display', serif;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 242, 255, 0.1), 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
         }
 
-        input:focus {
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
-            transform: scale(1.02);
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sub);
+            font-size: 1.2rem;
+            transition: color 0.3s;
         }
 
-        input::placeholder {
-            color: #666;
-            font-style: italic;
+        .search-input:focus + .search-icon {
+            color: var(--primary);
         }
 
-        /* Khu vực hiển thị kết quả */
-        .results-grid {
+        /* Results Grid */
+        .grid-container {
+            width: 90%;
+            max-width: 1000px;
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding-bottom: 50px;
         }
 
-        /* Thẻ kết quả (Bí kíp) */
         .card {
-            background: linear-gradient(145deg, #1e1e1e, #252525);
-            border: 1px solid #444;
-            border-left: 5px solid var(--primary-gold);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-            animation: fadeIn 0.5s ease-out;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
             position: relative;
             overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: default;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.7), 0 0 15px rgba(212, 175, 55, 0.2);
-            border-color: var(--secondary-gold);
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.15);
         }
 
-        /* Trang trí hoa văn mờ */
-        .card::after {
-            content: '✦';
+        /* Hiệu ứng ánh sáng chạy qua thẻ */
+        .card::before {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 40px;
-            color: rgba(212, 175, 55, 0.05);
-            pointer-events: none;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
         }
 
-        .question-box {
-            margin-bottom: 15px;
+        .card:hover::before {
+            left: 100%;
         }
 
-        .label {
-            font-size: 0.8rem;
+        .q-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            display: block;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .label-q { color: var(--red-accent); font-weight: bold; }
-        .label-a { color: var(--primary-gold); font-weight: bold; }
-
-        .content-q {
+        .q-text {
             font-size: 1.1rem;
-            color: #fff;
             line-height: 1.5;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 500;
         }
 
-        .content-a {
-            font-size: 1.3rem;
-            color: var(--primary-gold);
-            font-weight: bold;
-            text-shadow: 0 0 1px rgba(0,0,0,0.5);
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            margin: 15px 0;
+        }
+
+        .a-text {
+            font-size: 1.4rem;
+            color: var(--gold);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            font-family: 'Cinzel', serif;
         }
 
         .no-result {
+            grid-column: 1 / -1;
             text-align: center;
-            color: #666;
+            padding: 40px;
+            color: var(--text-sub);
             font-style: italic;
-            display: none;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .grid-container { grid-template-columns: 1fr; }
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 50px;
-            font-size: 0.9rem;
-            color: #555;
-            border-top: 1px solid #333;
-            padding-top: 20px;
-        }
     </style>
 </head>
 <body>
 
-    <h1>Tàng Kinh Các</h1>
-    <div class="subtitle">"Thiên địa bất nhân - Dĩ vạn vật vi sô cẩu"</div>
+    <header>
+        <h1>Tàng Kinh Các</h1>
+        <div class="subtitle">Hệ Thống Tra Cứu Đa Chiều</div>
+    </header>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Nhập tên nhân vật, tông môn, bí pháp..." onkeyup="searchData()">
+    <div class="search-wrapper">
+        <input type="text" id="searchInput" class="search-input" placeholder="Nhập từ khóa (Ví dụ: Đường Tam, Vương Lâm...)" onkeyup="searchData()">
+        <i class="fas fa-search search-icon"></i>
     </div>
 
-    <div id="resultsGrid" class="results-grid">
+    <div id="resultsGrid" class="grid-container">
         </div>
-    
-    <div id="noResult" class="no-result">
-        Không tìm thấy bí kíp phù hợp trong Tàng Kinh Các...
-    </div>
-
-    <div class="footer">
-        Thiết kế bởi Bốn Lù
-    </div>
 
     <script>
         // --- KHU VỰC DỮ LIỆU (Đạo hữu thêm câu hỏi vào đây) ---
@@ -450,22 +479,18 @@
 
         const input = document.getElementById("searchInput");
         const grid = document.getElementById("resultsGrid");
-        const noResult = document.getElementById("noResult");
 
-        // Hàm khởi chạy ban đầu (Load toàn bộ dữ liệu ra trước)
-        window.onload = function() {
-            renderList(database);
-        };
+        // Khởi chạy
+        window.onload = () => renderList(database);
 
         function searchData() {
             const query = input.value.toLowerCase().trim();
             
-            if (query === "") {
-                renderList(database); // Nếu xóa trắng ô tìm kiếm thì hiện lại tất cả
+            if (!query) {
+                renderList(database);
                 return;
             }
 
-            // Lọc dữ liệu
             const matches = database.filter(item => 
                 item.q.toLowerCase().includes(query) || 
                 item.a.toLowerCase().includes(query)
@@ -475,25 +500,23 @@
         }
 
         function renderList(data) {
-            grid.innerHTML = ""; // Xóa kết quả cũ
+            grid.innerHTML = "";
             
             if (data.length === 0) {
-                noResult.style.display = "block";
+                grid.innerHTML = `<div class="no-result">Không tìm thấy dữ liệu phù hợp...</div>`;
             } else {
-                noResult.style.display = "none";
-                data.forEach(item => {
-                    // Tạo thẻ HTML cho từng kết quả
+                data.forEach((item, index) => {
                     const card = document.createElement("div");
                     card.className = "card";
+                    // Thêm delay animation cho từng thẻ để tạo hiệu ứng xuất hiện lần lượt
+                    card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.05}s`;
+                    
                     card.innerHTML = `
-                        <div class="question-box">
-                            <span class="label label-q">Vấn (Hỏi)</span>
-                            <div class="content-q">${item.q}</div>
-                        </div>
-                        <div class="answer-box">
-                            <span class="label label-a">Đáp (Trả lời)</span>
-                            <div class="content-a">${item.a}</div>
-                        </div>
+                        <div class="q-label"><i class="far fa-question-circle"></i> Câu Hỏi</div>
+                        <div class="q-text">${item.q}</div>
+                        <div class="divider"></div>
+                        <div class="q-label" style="color: var(--gold);"><i class="fas fa-bolt"></i> Đáp Án</div>
+                        <div class="a-text">${item.a}</div>
                     `;
                     grid.appendChild(card);
                 });
