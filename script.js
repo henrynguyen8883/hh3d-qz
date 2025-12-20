@@ -271,6 +271,7 @@ const database = [
     { q: "Nhân vật Nạp Lan Yên Nhiên trong 《Đấu Phá Thương Khung》 quan hệ với Tiêu Viêm là gì?", a: "Vợ chưa cưới" },
     { q: "Hồn hoàn thứ nhất của Đường Tam trong 《Đấu La Đại Lục》 được săn bắn từ con hồn thú nào?", a: "Nhân Diện Ma Chu" },
     { q: "Vân Vọng Thư là nhân vật chính trong bộ phim hoạt hình nào?", a: "Vân Thâm Bất Tri Mộng" },
+    { q: "Thiên hỏa đầu tiên Vân thanh Nham trong 《Tiên Đế Trở Về》 đã thu phục khi trở về?", a: "Thanh Liên Địa Tâm Hỏa" },
 
 ];
 
