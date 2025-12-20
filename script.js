@@ -283,9 +283,33 @@ const grid = document.getElementById("resultsGrid");
  * Khởi chạy ứng dụng khi trang web tải xong
  */
 window.onload = () => {
+    initShootingStars();
     renderList(database);
     input.focus(); // Tự động focus vào ô tìm kiếm
 };
+
+/**
+ * Hàm khởi tạo hiệu ứng sao băng
+ */
+function initShootingStars() {
+    const container = document.querySelector('.shooting-stars');
+    const starCount = 10; // Số lượng sao băng ảo
+
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'shooting-star';
+
+        // Random vị trí xuất phát
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 50}%`; // Chỉ xuất hiện ở nửa trên màn hình
+
+        // Random thời gian delay để xuất hiện rải rác
+        // Delay từ 0s đến 20s cho mỗi ngôi sao
+        star.style.animationDelay = `${Math.random() * 20}s`;
+
+        container.appendChild(star);
+    }
+}
 
 /**
  * Hàm tìm kiếm dữ liệu
