@@ -5,7 +5,6 @@
     --gold-glow: rgba(255, 215, 0, 0.4);
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --card-hover: rgba(255, 255, 255, 0.1);
     --text-main: #ffffff;
     --text-sub: #b0b0b0;
     --font-heading: 'Cinzel', serif;
@@ -20,9 +19,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: var(--font-body);
-    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a0b2e);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    /* Deep Space Gradient */
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
     color: var(--text-main);
     min-height: 100vh;
     display: flex;
@@ -31,43 +29,172 @@ body {
     overflow-x: hidden;
 }
 
-/* Background Animation */
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Floating Orbs for extra depth */
-body::before, body::after {
-    content: '';
+/* Background Container to fix stars */
+.bg-fixed {
     position: fixed;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    filter: blur(100px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
-    opacity: 0.4;
-    animation: float 10s infinite alternate;
+    overflow: hidden;
 }
 
-body::before {
-    background: var(--primary-glow);
-    top: -100px;
-    left: -100px;
+/* Stars Generation using simple radial gradients usually better for performance than thousands of box-shadows manually written, 
+   but for this 'wow' effect without JS, we will use the classic box-shadow parallax technique.
+   I will include a reasonable dataset for the stars.
+*/
+
+/* Helper function behavior in pure CSS: SASS would be better, but here we hardcode a nice spread */
+.stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow:
+        10vw 10vh #FFF, 20vw 50vh #FFF, 30vw 30vh #FFF, 80vw 10vh #FFF, 90vw 80vh #FFF,
+        40vw 90vh #FFF, 50vw 50vh #FFF, 60vw 20vh #FFF, 70vw 70vh #FFF, 15vw 60vh #FFF,
+        25vw 25vh #FFF, 85vw 85vh #FFF, 35vw 95vh #FFF, 45vw 45vh #FFF, 95vw 15vh #FFF,
+        5vw 5vh #FFF, 55vw 65vh #FFF, 75vw 35vh #FFF, 65vw 55vh #FFF, 95vw 95vh #FFF;
+    animation: animStar 50s linear infinite;
 }
 
-body::after {
-    background: var(--gold-glow);
-    bottom: -100px;
-    right: -100px;
-    animation-delay: -5s;
+.stars::after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow:
+        10vw 10vh #FFF, 20vw 50vh #FFF, 30vw 30vh #FFF, 80vw 10vh #FFF, 90vw 80vh #FFF,
+        40vw 90vh #FFF, 50vw 50vh #FFF, 60vw 20vh #FFF, 70vw 70vh #FFF, 15vw 60vh #FFF,
+        25vw 25vh #FFF, 85vw 85vh #FFF, 35vw 95vh #FFF, 45vw 45vh #FFF, 95vw 15vh #FFF,
+        5vw 5vh #FFF, 55vw 65vh #FFF, 75vw 35vh #FFF, 65vw 55vh #FFF, 95vw 95vh #FFF;
 }
 
-@keyframes float {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
+.stars2 {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow:
+        12vw 15vh #FFF, 22vw 55vh #FFF, 32vw 35vh #FFF, 82vw 15vh #FFF, 92vw 85vh #FFF,
+        42vw 95vh #FFF, 52vw 55vh #FFF, 62vw 25vh #FFF, 72vw 75vh #FFF, 12vw 65vh #FFF,
+        28vw 28vh #FFF, 88vw 88vh #FFF, 38vw 98vh #FFF, 48vw 48vh #FFF, 98vw 18vh #FFF,
+        8vw 8vh #FFF, 58vw 68vh #FFF, 78vw 38vh #FFF, 68vw 58vh #FFF, 98vw 98vh #FFF;
+    animation: animStar 100s linear infinite;
 }
+
+.stars2::after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow:
+        12vw 15vh #FFF, 22vw 55vh #FFF, 32vw 35vh #FFF, 82vw 15vh #FFF, 92vw 85vh #FFF,
+        42vw 95vh #FFF, 52vw 55vh #FFF, 62vw 25vh #FFF, 72vw 75vh #FFF, 12vw 65vh #FFF,
+        28vw 28vh #FFF, 88vw 88vh #FFF, 38vw 98vh #FFF, 48vw 48vh #FFF, 98vw 18vh #FFF,
+        8vw 8vh #FFF, 58vw 68vh #FFF, 78vw 38vh #FFF, 68vw 58vh #FFF, 98vw 98vh #FFF;
+}
+
+@keyframes animStar {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
+/* Shooting Stars */
+.shooting-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateZ(45deg);
+}
+
+.shooting-star {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(-45deg, rgba(95, 145, 255, 1), rgba(0, 0, 255, 0));
+    border-radius: 999px;
+    filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
+    animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    right: 0;
+    height: 2px;
+    background: linear-gradient(-45deg, rgba(0, 0, 255, 0), rgba(95, 145, 255, 1), rgba(0, 0, 255, 0));
+    transform: translateX(50%) rotateZ(45deg);
+    border-radius: 100%;
+    animation: shining 3000ms ease-in-out infinite;
+}
+
+.shooting-star::after {
+    /* Main Star Head */
+    content: '';
+    position: absolute;
+    top: calc(50% - 5px);
+    right: 0;
+    height: 10px;
+    width: 10px;
+    background: linear-gradient(-45deg, rgba(0, 0, 255, 0), rgba(95, 145, 255, 1), rgba(0, 0, 255, 0));
+    transform: translateX(50%) rotateZ(45deg);
+    border-radius: 100%;
+    box-shadow: 0 0 20px rgba(95, 145, 255, 1);
+}
+
+/* Shooting Animation */
+@keyframes tail {
+    0% {
+        width: 0;
+    }
+
+    30% {
+        width: 100px;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes shooting {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(300px);
+    }
+}
+
+@keyframes shining {
+    0% {
+        width: 0;
+    }
+
+    50% {
+        width: 30px;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+/* Generate multiple shooting stars with different delays positions via CSS or JS. 
+   We will rely on JS to inject them for randomness, but let's define the class here. 
+*/
 
 /* Header */
 header {
@@ -91,8 +218,13 @@ h1 {
 }
 
 @keyframes titleGlow {
-    from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
-    to { text-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.4); }
+    from {
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    }
+
+    to {
+        text-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.4);
+    }
 }
 
 .subtitle {
@@ -150,7 +282,7 @@ h1 {
     transition: color 0.3s, transform 0.3s;
 }
 
-.search-input:focus + .search-icon {
+.search-input:focus+.search-icon {
     color: var(--primary);
     transform: translateY(-50%) rotate(90deg);
 }
@@ -263,7 +395,7 @@ h1 {
     color: var(--text-sub);
     font-style: italic;
     font-size: 1.2rem;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     backdrop-filter: blur(10px);
 }
@@ -272,20 +404,33 @@ h1 {
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 ::-webkit-scrollbar-track {
-    background: #0f0c29; 
+    background: #0f0c29;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: #302b63; 
+    background: #302b63;
     border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary); 
+    background: var(--primary);
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    h1 { font-size: 2.5rem; }
-    .search-input { padding: 20px 50px 20px 25px; font-size: 1rem; }
-    .grid-container { grid-template-columns: 1fr; width: 95%; }
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .search-input {
+        padding: 20px 50px 20px 25px;
+        font-size: 1rem;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+        width: 95%;
+    }
 }
