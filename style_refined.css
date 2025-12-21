@@ -1,0 +1,35 @@
+/* Header Credit - Refined */
+.header-credit {
+    margin-top: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 25px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.header-credit:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 25px rgba(0, 242, 255, 0.1);
+}
+
+.header-credit .credit-name {
+    margin-left: 8px;
+    color: var(--primary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+    letter-spacing: 1px;
+    position: relative;
+}
